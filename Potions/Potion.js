@@ -155,7 +155,10 @@ function seekCurse(ingredients, curses) {
 }
 
 function categorizeEffect(str) {
-  const parts = str.split('_');
+    const parts = str.split('_');
+    if (parts.length === 2 && parts[0] === 'boost') {
+      return { potency: 'nothing', effect: 'boost', attribute: parts[1] };
+    } 
   let potency = parts[0];             // 'lesser'
   let effect = parts[1] || 'unknown'; // 'restore'
   let attribute = parts[2] || null;   // 'constitution' o null

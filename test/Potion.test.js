@@ -159,4 +159,183 @@ describe('signo inverso en los atributos del antidoto', () => {
     });
   });
 
+  describe('Elixir boost tests', () => {
+    let allIngredients;
+  
+    beforeAll(async () => {
+      const ingredientsResponse = await axios.get('https://kaotika-server.fly.dev/ingredients');
+      allIngredients = ingredientsResponse.data.data;
+    });
+  
+    test('least value rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/charisma elixir/);
+      expect(createdPotion.modifiers).toHaveProperty('charisma', 5);
+    });
+  
+    test('least duration rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+      const ingredient3 = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      expect(ingredient3).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2, ingredient3];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/charisma elixir/);
+      expect(createdPotion.duration).toBeDefined();
+      expect(createdPotion.duration).toBe(1);
+    });
+  
+    test('lesser value rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/dexterity elixir/);
+      expect(createdPotion.modifiers).toHaveProperty('dexterity', 10);
+    });
+  
+    test('lesser dex duration rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+      const ingredient3 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      expect(ingredient3).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2, ingredient3];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/dexterity elixir/);
+      expect(createdPotion.duration).toBeDefined();
+      expect(createdPotion.duration).toBe(1);
+    });
+  
+    test('normal value rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('boost_strength'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('boost_strength'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/strength elixir/);
+      expect(createdPotion.modifiers).toHaveProperty('strength', 15);
+    });
+  
+    test('normal duration rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('boost_dexterity'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('boost_dexterity'));
+      const ingredient3 = allIngredients.find((ing) => ing.effects.includes('boost_dexterity'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      expect(ingredient3).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2, ingredient3];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/dexterity elixir/);
+      expect(createdPotion.duration).toBeDefined();
+      expect(createdPotion.duration).toBe(2);
+    });
+  
+    test('greater value rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('greater_boost_strength'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('greater_boost_strength'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/strength elixir/);
+      expect(createdPotion.modifiers).toHaveProperty('strength', 20);
+    });
+  
+    test('greater duration rounding', () => {
+      const ingredient1 = allIngredients.find((ing) => ing.effects.includes('greater_boost_dexterity'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('greater_boost_dexterity'));
+      const ingredient3 = allIngredients.find((ing) => ing.effects.includes('greater_boost_dexterity'));
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+      expect(ingredient3).toBeDefined();
+      const selectedIngredients = [ingredient1, ingredient2, ingredient3];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toMatch(/dexterity elixir/);
+      expect(createdPotion.duration).toBeDefined();
+      expect(createdPotion.duration).toBe(3);
+    });
+    test('should create an Elixir and the modifiers should be 10', () => {
+        const leastBoost = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+        const lesserBoost = allIngredients.find((ing) => ing.effects.includes('lesser_boost_charisma'));
+        const greaterBoost = allIngredients.find((ing) => ing.effects.includes('greater_boost_charisma'));
+        expect(leastBoost).toBeDefined();
+        expect(lesserBoost).toBeDefined();
+        expect(greaterBoost).toBeDefined();
+        const selectedIngredients = [leastBoost, lesserBoost, greaterBoost];
+        const createdPotion = Potion.create(selectedIngredients, []);
+        expect(createdPotion.type).toBe('Elixir');
+        expect(createdPotion.name).toMatch(/charisma elixir/);
+        expect(createdPotion.modifiers).toHaveProperty('charisma', 10);
+      });
+
+      test('should create an Elixir and the duration should be 10', () => {
+        const leastBoost = allIngredients.find((ing) => ing.effects.includes('least_boost_charisma'));
+        const lesserBoost = allIngredients.find((ing) => ing.effects.includes('lesser_boost_charisma'));
+        const greaterBoost = allIngredients.find((ing) => ing.effects.includes('greater_boost_charisma'));
+        expect(leastBoost).toBeDefined();
+        expect(lesserBoost).toBeDefined();
+        expect(greaterBoost).toBeDefined();
+        const selectedIngredients = [leastBoost, lesserBoost, greaterBoost];
+        const createdPotion = Potion.create(selectedIngredients, []);
+        expect(createdPotion.type).toBe('Elixir');
+        expect(createdPotion.name).toMatch(/charisma elixir/);
+        expect(createdPotion.duration).toBeDefined();
+        expect(createdPotion.duration).toBe(1);
+      });
+
+      test('should create a failed potion(not the same atribute)', () => {
+        const leastBoost = allIngredients.find((ing) => ing.effects.includes('least_frenzy'));
+        const lesserBoost = allIngredients.find((ing) => ing.effects.includes('lesser_boost_charisma'));
+        const greaterBoost = allIngredients.find((ing) => ing.effects.includes('greater_boost_charisma'));
+        expect(leastBoost).toBeDefined();
+        expect(lesserBoost).toBeDefined();
+        expect(greaterBoost).toBeDefined();
+        const selectedIngredients = [leastBoost, lesserBoost, greaterBoost];
+        const createdPotion = Potion.create(selectedIngredients, []);
+        expect(createdPotion.type).not.toBe('Elixir');
+      });
+  });
+
+  describe('Potion name format: "<modifier> <attribute> elixir" (Lesser Dex)', () => {
+    let allIngredients;
+  
+    beforeAll(async () => {
+      const ingredientsResponse = await axios.get('https://kaotika-server.fly.dev/ingredients');
+      allIngredients = ingredientsResponse.data.data;
+    });
+  
+    test('should create "lesser dexterity elixir" for ingredients with lesser_boost_dexterity', () => {
+      const ingredient1 = allIngredients.find((ing) =>ing.effects.includes('lesser_boost_dexterity'));
+      const ingredient2 = allIngredients.find((ing) => ing.effects.includes('lesser_boost_dexterity'));
+  
+      expect(ingredient1).toBeDefined();
+      expect(ingredient2).toBeDefined();
+
+      const selectedIngredients = [ingredient1, ingredient2];
+      const createdPotion = Potion.create(selectedIngredients, []);
+      expect(createdPotion.type).toBe('Elixir');
+      expect(createdPotion.name).toBe('lesser dexterity elixir');
+    });
+  });
+
   
